@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { VideoPlayerContext } from "../VideoPlayerContext";
-import { loadVideo } from "../../../Utils/Loaders";
+import { loadVideo } from "../../../Utils/LegacyLoaders";
 
 const useVideoPlayer = () => {
 

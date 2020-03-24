@@ -20,8 +20,8 @@ import dreamGradientFragmentShader from '!raw-loader!glslify-loader!../Shaders/d
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import * as THREE from 'three';
-import { assetPathShared } from "./assets.js";
-import { hexToRgb } from './colors';
+import { assetPathShared } from "../Utils/assets.js";
+import { hexToRgb } from '../Utils/colors';
 
 
 function cloudEnvMap() {

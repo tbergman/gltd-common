@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { AudioPlayerContext } from "../AudioPlayerContext";
-import AudioStreamer from '../../../Utils/Audio/AudioStreamer';
+import AudioStreamer from '../../../Audio/AudioStreamer';
 
 // TODO autoAdvance track like LegacyPlayer
 const useAudioPlayer = () => {

@@ -1,22 +1,21 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { TOTAL_RELEASES } from "../Content";
 import "./Navigation.css";
 
 
-const useNavigation = () => {
+const useNavigation = (totalReleases) => {
     const [path, setPath] = useState(window.location.pathname);
     const currentIndex = parseInt(path.replace("/", ""))
     const isHome = () => path === "/";
-    
+
     useEffect(() => {
-        if (path && path !== window.location.pathname){
+        if (path && path !== window.location.pathname) {
             window.location.pathname = path;
         }
     }, [path])
 
     function prevRelease() {
         if (isHome()) {
-            return "/" + TOTAL_RELEASES.toString();
+            return "/" + totalReleases.toString();
         } else if (currentIndex == 1) {
             return "/";
         } else {
@@ -25,7 +24,7 @@ const useNavigation = () => {
     };
 
     function nextRelease() {
-        if (currentIndex == TOTAL_RELEASES) {
+        if (currentIndex == totalReleases) {
             return "/";
         } else if (isHome()) {
             return "/1";
@@ -40,8 +39,8 @@ const useNavigation = () => {
     }
 }
 
-function NextNavigationArrow({ color }) {
-    const { goToNext } = useNavigation();
+function NextNavigationArrow({ color, totalReleases }) {
+    const { goToNext } = useNavigation(totalReleases);
     return (
         <div className="arrow arrow-next">
             <svg
@@ -59,8 +58,8 @@ function NextNavigationArrow({ color }) {
 }
 
 
-function PrevNavigationArrow({ color }) {
-    const { goToPrev } = useNavigation();
+function PrevNavigationArrow({ color, totalReleases }) {
+    const { goToPrev } = useNavigation(totalReleases);
     return (
         <div className="arrow arrow-prev">
             <svg
@@ -77,11 +76,11 @@ function PrevNavigationArrow({ color }) {
     );
 }
 
-export default function Navigation({ color }) {
+export default function Navigation({ ...props }) {
     return (
         <>
-            <PrevNavigationArrow color={color} />
-            <NextNavigationArrow color={color} />
+            <PrevNavigationArrow {...props} />
+            <NextNavigationArrow {...props} />
         </>
     );
 }

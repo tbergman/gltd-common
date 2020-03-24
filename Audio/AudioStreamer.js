@@ -1,4 +1,4 @@
-import { isSafari } from "../BrowserDetection";
+import { isSafari } from "../Utils/BrowserDetection";
 
 const defaultAudioStreamerProps = {
   filterType: "lowpass",

@@ -1,7 +1,13 @@
 // TODO: Clean up (and remove physics?)
 import * as CANNON from 'cannon';
 import * as THREE from "three";
-import { service } from "./service";
+
+
+
+let service = {
+  pins: [],
+  wind: true
+}
 
 
 /*
@@ -391,4 +397,4 @@ clothBody.quaternion.setFromAxisAngle(axis, Math.PI / 2);
 
 
 
-export { cloth, clothGeometry, clothMesh, clothBody, clothPhysMaterial, simulateCloth, windForce };
+export { cloth, clothGeometry, clothMesh, clothBody, clothPhysMaterial, simulateCloth, windForce, service };

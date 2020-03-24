@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { formatSoundcloudSrc } from "../../Utils/Audio/SoundcloudUtils"
+import { formatSoundcloudSrc } from "../../Audio/SoundcloudUtils"
 
 const AudioPlayerContext = React.createContext([{}, () => {}]);
 
