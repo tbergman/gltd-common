@@ -46,7 +46,7 @@ export default function UI({
     return (
         <>
             {logo && <Logo color={content.colors.logo} />}
-            {navigation && <Navigation color={content.colors.navigation} totalReleases={content.totalReleases} />}
+            {navigation && <Navigation color={content.colors.navigation} lastIdx={content.lastIdx || -1} />}
             {overlay && <Overlay
                 hasBeenClosed={overlayHasBeenClosed}
                 contentReady={contentReady}

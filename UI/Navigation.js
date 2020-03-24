@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import "./Navigation.css";
 
 
-const useNavigation = (totalReleases) => {
+const useNavigation = (lastIdx) => {
     const [path, setPath] = useState(window.location.pathname);
     const currentIndex = parseInt(path.replace("/", ""))
     const isHome = () => path === "/";
@@ -15,7 +15,7 @@ const useNavigation = (totalReleases) => {
 
     function prevRelease() {
         if (isHome()) {
-            return "/" + totalReleases.toString();
+            return "/" + lastIdx.toString()
         } else if (currentIndex == 1) {
             return "/";
         } else {
@@ -24,7 +24,7 @@ const useNavigation = (totalReleases) => {
     };
 
     function nextRelease() {
-        if (currentIndex == totalReleases) {
+        if (currentIndex == lastIdx.toString()) {
             return "/";
         } else if (isHome()) {
             return "/1";
@@ -39,8 +39,8 @@ const useNavigation = (totalReleases) => {
     }
 }
 
-function NextNavigationArrow({ color, totalReleases }) {
-    const { goToNext } = useNavigation(totalReleases);
+function NextNavigationArrow({ color, lastIdx }) {
+    const { goToNext } = useNavigation(lastIdx);
     return (
         <div className="arrow arrow-next">
             <svg
@@ -58,8 +58,8 @@ function NextNavigationArrow({ color, totalReleases }) {
 }
 
 
-function PrevNavigationArrow({ color, totalReleases }) {
-    const { goToPrev } = useNavigation(totalReleases);
+function PrevNavigationArrow({ color, lastIdx }) {
+    const { goToPrev } = useNavigation(lastIdx);
     return (
         <div className="arrow arrow-prev">
             <svg
@@ -77,6 +77,7 @@ function PrevNavigationArrow({ color, totalReleases }) {
 }
 
 export default function Navigation({ ...props }) {
+    
     return (
         <>
             <PrevNavigationArrow {...props} />
