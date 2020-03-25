@@ -1,7 +1,18 @@
 # gltd-common
 
-This "common" package can grow and be cleaned up organically. Much of the code in the Utils, for instance, could be further categorized.
+## It's A Shared Library
+
+This repo hosts UI and Webgl elements and tools for gltd sites.
+
+This "common" package can grow and be cleaned up organically. 
+
+* Much of the code in the Utils, for instance, could be further categorized.
+* The UI repo could be removed to a design-system repo.
 
 It includes big chunks of the fifteen.pm and globally.ltd UI and visual pallete.
 
-Requires git-lfs for assets.
+## It's A Submodule and a Data Store 😬
+
+Because we haven't tackled media management in a comprehensive way, this repo does not work as an actual package but for the time being as a submodule to be embedded into the directory structure of a gltd site.
+
+Becase we haven't tackled media management in a comprehensive way, this repo also requires `git-lfs` for the `assets` dir.
