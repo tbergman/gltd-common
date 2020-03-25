@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import { tileTextureMaps } from './utils';
+import { cloudEnvMap, tileTextureMaps } from './utils';
 
 import albedo from "../assets/textures/lined-cement/Lined-Cement--albedo.png";
 import ao from "../assets/textures/lined-cement/Lined-Cement-ao.png";
