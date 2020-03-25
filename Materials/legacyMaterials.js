@@ -87,8 +87,8 @@ export function initRockMaterial(textureLoader, color, props) {
 		roughnessMap: roughnessMap,
 		metalnessMap: metalnessMap,
 		aoMap: aoMap,
-		displacementMap: props.displacementScale ? displacementMap : null,
-		displacementScale: props.dispacementScale || 1,
+		displacementMap: props && props.displacementScale ? displacementMap : null,
+		displacementScale: props && props.dispacementScale || 1,
 		envMap: textureCube
 	});
 	return mat;
