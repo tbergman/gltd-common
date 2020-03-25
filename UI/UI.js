@@ -19,11 +19,11 @@ export default function UI({
     // around overlay being closed the first time.
     onOverlayHasBeenClosed = () => { },
 }) {
-    const logo = useState(loadWithLogo ? true : false);
-    const navigation = useState(loadWithNavigation ? true : false);
-    const [player, togglePlayer] = useState(loadWithPlayer ? true : false);
-    const [infoIcon, toggleInfoIcon] = useState(loadWithInfoIcon ? true : false);
-    const [overlay, toggleOverlay] = useState(loadWithOverlay ? true : false);
+    const [logo, _] = useState(loadWithLogo);
+    const [navigation, __] = useState(loadWithNavigation);
+    const [player, togglePlayer] = useState(loadWithPlayer);
+    const [infoIcon, toggleInfoIcon] = useState(loadWithInfoIcon);
+    const [overlay, toggleOverlay] = useState(loadWithOverlay);
     const [overlayHasBeenClosed, setOverlayHasBeenClosed] = useState(!loadWithOverlay);
     const [firstTrackTriggered, setFirstTrackTriggered] = useState(false);
     const hasTracks = useMemo(() => content.tracks ? true : false);
@@ -42,7 +42,7 @@ export default function UI({
         toggleInfoIcon(loadWithInfoIcon || overlayHasBeenClosed);
         togglePlayer(loadWithPlayer || overlayHasBeenClosed && hasTracks);
     }, [overlayHasBeenClosed])
-
+    console.log("NAV", navigation)
     return (
         <>
             {logo && <Logo color={content.colors.logo} />}
