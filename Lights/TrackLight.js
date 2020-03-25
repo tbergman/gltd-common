@@ -1,7 +1,6 @@
 import React, { useMemo, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useResource, useThree } from 'react-three-fiber';
-import * as TWEEN from "three-tween";
 
 export default function TrackLight({ ...props }) {
     const position = props.position || [0, 0, 0];
