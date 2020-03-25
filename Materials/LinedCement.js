@@ -10,7 +10,7 @@ import normal from "../assets/textures/lined-cement/Lined-Cement-Normal-ogl.png"
 import roughness from "../assets/textures/lined-cement/Lined-Cement-Roughness.png";
 
 
-export function LinedCement({ materialRef, ...props }) {
+export default function LinedCement({ materialRef, ...props }) {
     //https://freepbr.com/materials/lined-cement1/
     const [albedoMap, aoMap, heightMap, metallicMap, normalMap, roughnessMap, envMap] = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
