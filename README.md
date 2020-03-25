@@ -15,4 +15,7 @@ It includes big chunks of the fifteen.pm and globally.ltd UI and visual pallete.
 
 Because we haven't tackled media management in a comprehensive way, this repo does not work as an actual package but for the time being as a submodule to be embedded into the directory structure of a gltd site.
 
-Becase we haven't tackled media management in a comprehensive way, this repo also requires `git-lfs` for the `assets` dir.
+Because we haven't tackled media management in a comprehensive way, this repo also requires `git-lfs` for the `assets` dir.
+
+To step out of this way of doing things, we will first need to actually migrate all fifteen.pm assets into this repo. Then we can more comprehensively manage data across globally.ltd and fifteen.pm.
+
