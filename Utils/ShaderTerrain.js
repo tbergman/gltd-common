@@ -14,41 +14,30 @@ export const ShaderTerrain = {
    ------------------------------------------------------------------------- */
 
   'terrain' : {
-
     uniforms: THREE.UniformsUtils.merge( [
-
       THREE.UniformsLib[ "fog" ],
       THREE.UniformsLib[ "lights" ],
-
       {
-
         "enableDiffuse1": { value: 0 },
         "enableDiffuse2": { value: 0 },
         "enableSpecular": { value: 0 },
         "enableReflection": { value: 0 },
-
         "tDiffuse1": { value: null },
         "tDiffuse2": { value: null },
         "tDetail": { value: null },
         "tNormal": { value: null },
         "tSpecular": { value: null },
         "tDisplacement": { value: null },
-
         "uNormalScale": { value: 1.0 },
-
         "uDisplacementBias": { value: 0.0 },
         "uDisplacementScale": { value: 1.0 },
-
         "diffuse": { value: new THREE.Color( 0xeeeeee ) },
         "specular": { value: new THREE.Color( 0x111111 ) },
         "shininess": { value: 30 },
         "opacity": { value: 1 },
-
         "uRepeatBase": { value: new THREE.Vector2( 1, 1 ) },
         "uRepeatOverlay": { value: new THREE.Vector2( 1, 1 ) },
-
         "uOffset": { value: new THREE.Vector2( 0, 0 ) }
-
       }
 
     ] ),
