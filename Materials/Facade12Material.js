@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
 import { tileTextureMaps } from './utils';
-import color from "../assets/textures/facade12/Facade12_col.jpg;
-import normal from "../assets/textures/facade12/Facade12_nrm.jpg;
-import emissive from "../assets/textures/facade12/Facade12_emi.jpg;
-import roughness from "../assets/textures/facade12/Facade12_rgh.jpg;
-import displacement from "../assets/textures/facade12/Facade12_disp.jpg;
+import color from "../assets/textures/facade12/Facade12_col.jpg";
+import normal from "../assets/textures/facade12/Facade12_nrm.jpg";
+import emissive from "../assets/textures/facade12/Facade12_emi.jpg";
+import roughness from "../assets/textures/facade12/Facade12_rgh.jpg";
+import displacement from "../assets/textures/facade12/Facade12_disp.jpg";
 
 export function Facade12Material({ materialRef, ...props }) {
 	// https://www.cc0textures.com/view.php?tex=Facade12

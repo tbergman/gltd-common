@@ -16,6 +16,7 @@ function cloudEnvMap() {
 function tileTextureMaps(textureMaps, props) {
     return textureMaps.map(textureMap => {
         const repeat = props.textureRepeat || { x: 1, y: 1 };
+		textureMap.wrapT = THREE.RepeatWrapping;
         textureMap.wrapS = THREE.RepeatWrapping;
         textureMap.offset.set(0, 0);
         textureMap.repeat.set(repeat.x, repeat.y);
