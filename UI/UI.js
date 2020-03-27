@@ -52,6 +52,7 @@ export default function UI({
                 message={content.message}
                 instructions={content.instructions}
                 purchaseLink={content.purchaseLink}
+                purchaseLinkText={content.purchaseLinkText}
                 overlayColor={content.colors.overlay}
                 overlayContentColor={content.colors.overlayContent}
                 onToggle={(e) => {
