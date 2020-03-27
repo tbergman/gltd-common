@@ -42,7 +42,6 @@ export default function UI({
         toggleInfoIcon(loadWithInfoIcon || overlayHasBeenClosed);
         togglePlayer(loadWithPlayer || overlayHasBeenClosed && hasTracks);
     }, [overlayHasBeenClosed])
-    console.log("NAV", navigation)
     return (
         <>
             {logo && <Logo color={content.colors.logo} />}
