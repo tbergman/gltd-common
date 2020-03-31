@@ -42,6 +42,7 @@ export default function UI({
         toggleInfoIcon(loadWithInfoIcon || overlayHasBeenClosed);
         togglePlayer(loadWithPlayer || overlayHasBeenClosed && hasTracks);
     }, [overlayHasBeenClosed])
+
     return (
         <>
             {logo && <Logo color={content.colors.logo} />}
@@ -52,6 +53,7 @@ export default function UI({
                 message={content.message}
                 instructions={content.instructions}
                 purchaseLink={content.purchaseLink}
+                purchaseLinkText={content.purchaseLinkText}
                 overlayColor={content.colors.overlay}
                 overlayContentColor={content.colors.overlayContent}
                 onToggle={(e) => {
