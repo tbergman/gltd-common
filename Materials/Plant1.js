@@ -8,27 +8,22 @@ import basecolor from "../assets/textures/disco-ball-01/Disco_Ball_001_basecolor
 import ambientOcclusion from "../assets/textures/disco-ball-01/Disco_Ball_001_ambientOcclusion.jpg"
 import { cloudEnvMap } from './utils';
 
-// source: https://3dtextures.me/2019/03/18/disco-ball-001/
-export default function DiscoBall01({ materialRef, ...props }) {
-    const [roughnessMap, normalMap, heightMap, basecolorMap, ambientOcclusionMap, envMap] = useMemo(() => {
+// source: https://sketchfab.com/3d-models/tropical-plant-5d3ae0c92f0f4b98b17b1400b0d8cf74
+export default function Plant1({ materialRef, ...props }) {
+    const [colorMap, normalMap, specularMap, envMap] = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
-        const roughnessMap = textureLoader.load(roughness)
+        const colorMap = textureLoader.load(roughness)
         const normalMap = textureLoader.load(normal)
-        const heightMap = textureLoader.load(height)
-        const basecolorMap = textureLoader.load(basecolor)
-        const ambientOcclusionMap = textureLoader.load(ambientOcclusion)
+        const specularMap = textureLoader.load(height)
         const envMap = cloudEnvMap();
-        const textureMaps = [roughnessMap, normalMap, heightMap, basecolorMap, ambientOcclusionMap, envMap];
+        const textureMaps = [colorMap, normalMap, specularMap, envMap];
         return tileTextureMaps(textureMaps, props);
     });
     return <meshStandardMaterial
         ref={materialRef}
-        map={basecolorMap}
-        roughnessMap={roughnessMap}
-        bumpMap={heightMap}
+        colorMap={colorMap}
         normalMap={normalMap}
-        aoMap={ambientOcclusionMap}
+        specularMap={specularMap}
         envMap={envMap}
-        roughness={-1} // invert roughness to get glossiness
         {...props} />;
 }
