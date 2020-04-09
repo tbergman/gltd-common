@@ -6,7 +6,7 @@ export default function LiveStream({ materialRef, src, play, ...props }) {
     if (!src) {
         console.error("src a required prop for LiveStream texture.")
     }
-    if (!play) {
+    if (play === undefined) {
         console.error("play is a required prop for LiveStream texture.")
     }
 
