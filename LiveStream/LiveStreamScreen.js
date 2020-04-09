@@ -32,7 +32,7 @@ export function createLiveStreamTexture({src, play}) {
   return texture;
 }
 
-export default function LiveStreamScreen({ src, sizeX, sizeY, play, position }) {
+export default function LiveStreamScreen({ src, sizeX, sizeY, position, play}) {
 
   // Create video element
   const [material, geometry] = useMemo(() => {
