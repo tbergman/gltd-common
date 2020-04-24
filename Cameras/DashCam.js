@@ -4,14 +4,17 @@ import { useFrame, useThree } from 'react-three-fiber';
 import { isMobile } from '../Utils/BrowserDetection';
 
 export default function DashCam({ useDashCam, ...props }) {
-    const ref = useRef()
+    const ref = props.cameraRef ? props.cameraRef : useRef();
     const { aspect, size, setDefaultCamera } = useThree();
     const [looking, setLooking] = useState(false);
 
     useEffect(() => {
-        window.addEventListener("touchmove", look, false);
-        window.addEventListener("mousemove", look, false);
-        window.addEventListener("touchend", () => setLooking(false), false);
+        if (!props.disableLook) {
+            window.addEventListener("touchmove", look, false);
+            window.addEventListener("mousemove", look, false);
+            window.addEventListener("touchend", () => setLooking(false), false);
+        }
+
     })
 
     const [euler, PI_7, PI_48, PI_96] = useMemo(() => [
@@ -22,6 +25,7 @@ export default function DashCam({ useDashCam, ...props }) {
     ])
 
     const look = (event) => {
+        // TODO if props.disableLook
         if (!ref.current) return;
         if (!looking) setLooking(true);
         const [clientX, clientY] = (() => {
