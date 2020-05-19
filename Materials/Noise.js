@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from 'react-three-fiber';
 import explosion from "../assets/textures/explosion/explosion.png";
@@ -8,16 +8,17 @@ import fragment from '!raw-loader!glslify-loader!../Shaders/noiseFragment.glsl';
 
 // source: https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js/
 export default function Noise({ materialRef, ...props }) {
+	const timeScale = props.timeScale ? props.timeScale : .0001
 	const start = useMemo(() => Date.now())
-	const uniforms = useMemo(() => {
+	const [uniforms, texMap] = useMemo(() => {
 		const textureLoader = new THREE.TextureLoader();
-		const img = textureLoader.load(props.imagePath ? props.imagePath : explosion)
-		console.log("IMG", img)
-		return {
-			tImg: {
-				type: "t",
-				value: img,
-			},
+		const texMap = textureLoader.load(props.imagePath ? props.imagePath : explosion)
+		// console.log("IMG", img)
+		const uniforms = {
+			// map: {
+			// 	type: "t",
+			// 	value: texMap,
+			// },
 			time: { // float initialized to 0
 				type: "f",
 				value: 0.0
@@ -27,17 +28,23 @@ export default function Noise({ materialRef, ...props }) {
 				value: props.scale ? props.scale : .033,
 			}
 		}
+		return [uniforms, texMap]
 	})
 
 	useFrame(() => {
-		uniforms['time'].value = .0005 * (Date.now() - start);
+		uniforms['time'].value = timeScale * (Date.now() - start);
 	})
 
 	return <shaderMaterial
 		ref={materialRef}
 		uniforms={uniforms}
 		vertexShader={vertex}
+		// fragmentShader={THREE.MaterialsShader.fragmentShader}
 		fragmentShader={fragment}
+		// map={texMap}
+		// defines={
+		// 	{ USE_MAP: true }
+		// }
 		{...props}
 	/>;
 }
