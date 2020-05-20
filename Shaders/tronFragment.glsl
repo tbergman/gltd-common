@@ -19,12 +19,12 @@ float plotY(vec2 st, float pct) {
 // TODO maybe can implement a map function ?
 // https://gist.github.com/companje/29408948f1e8be54dd5733a74ca49bb9
 void main() {
-  float beatsPerSecond = 2.;// uBPM / 60.;
-  float wavyLines = sin(vUv.x * uTime / beatsPerSecond * .1);
+  // float beatsPerSecond = 2.;// uBPM / 60.;
+  // float wavyLines = sin(vUv.x * uTime / beatsPerSecond * .1);
   
-  vec3 col = vec3(0, 0, wavyLines);
+  vec3 col = vec3(, wavyLines*.5, wavyLines);
 
-  float numBeats = 20.;//floor(uTime) / 60. / beatsPerSecond; //TODO 
+  // float numBeats = 20.;//floor(uTime) / 60. / beatsPerSecond; //TODO 
 
   for (int i = 0; i < NUM_LINES; i++) {
     float pos = float(i) / float(NUM_LINES);
@@ -35,7 +35,7 @@ void main() {
     // creates the motion and gaps
     float streak = sin(vUv.y * uTime * .005);
     // int modulo not supported in all glsl versions
-    if (fract(numBeats / 64.) != 0.) {//} && cos(vUv.x) > .5) {//cos(uTime *
+    if (fract(uBPM / 64.) != 0.) {//} && cos(vUv.x) > .5) {//cos(uTime *
     
       col += lineY * streak;
     }
