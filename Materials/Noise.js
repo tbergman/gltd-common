@@ -10,25 +10,20 @@ import fragment from '!raw-loader!glslify-loader!../Shaders/noiseFragment.glsl';
 export default function Noise({ materialRef, ...props }) {
 	const timeScale = props.timeScale ? props.timeScale : .0001
 	const start = useMemo(() => Date.now())
-	const [uniforms, texMap] = useMemo(() => {
+	const uniforms = useMemo(() => {
 		const textureLoader = new THREE.TextureLoader();
 		const texMap = textureLoader.load(props.imagePath ? props.imagePath : explosion)
-		// console.log("IMG", img)
-		const uniforms = {
-			// map: {
-			// 	type: "t",
-			// 	value: texMap,
-			// },
-			time: { // float initialized to 0
-				type: "f",
-				value: 0.0
+		return {
+			map: {
+				value: texMap,
 			},
-			scale: {
-				type: "f",
-				value: props.scale ? props.scale : .033,
+			time: {
+				value: 0.0,
+			},
+			noiseScale: {
+				value: props.noiseScale ? props.noiseScale : .033,
 			}
 		}
-		return [uniforms, texMap]
 	})
 
 	useFrame(() => {
@@ -38,13 +33,9 @@ export default function Noise({ materialRef, ...props }) {
 	return <shaderMaterial
 		ref={materialRef}
 		uniforms={uniforms}
+		wireframe={props.wireframe ? props.wireframe : false}
 		vertexShader={vertex}
-		// fragmentShader={THREE.MaterialsShader.fragmentShader}
 		fragmentShader={fragment}
-		// map={texMap}
-		// defines={
-		// 	{ USE_MAP: true }
-		// }
 		{...props}
 	/>;
 }

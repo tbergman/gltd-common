@@ -185,21 +185,31 @@ float pnoise(vec3 P, vec3 rep)
 varying vec2 vUv;
 varying float noise;
 uniform float time;
-uniform float scale;
+uniform float noiseScale;
 
 float turbulence( vec3 p ) {
 
-  float w = 100.0;
+  float w = noiseScale * 10.0;
   float t = -.5;
 
   for (float f = 1.0 ; f <= 10.0 ; f++ ){
     float power = pow( 2.0, f );
-    t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+    t += abs( pnoise( vec3( power * p ), vec3( noiseScale, noiseScale, noiseScale ) ) / power );
   }
 
   return t;
 
 }
+
+//https://thebookofshaders.com/edit.php#05/parabola.frag
+// float parabola( float x, float k ){
+//     return pow( 4.0*x*(1.0-x), k );
+// }
+
+float random( vec3 scale, float seed ){
+  return fract( sin( dot( vec3(vUv.xy, time) + seed, scale ) ) * 43758.5453 + seed ) ;
+}
+
 
 void main() {
 
@@ -207,13 +217,19 @@ void main() {
 
   // add time to the noise parameters so it's animated
   // noise = -.1 * turbulence( .5 * normal + time );
+  // noise = -noiseScale * turbulence( .5 * normal + time );
+  noise = sin(noiseScale *  -noiseScale * .5 * turbulence( .5 * normal + time ));
   // float b = 1. * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
-  // float displacement = - noise + b;
-  noise = scale *  -scale * turbulence( .5 * normal + time );
-  float b = scale * .5 * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( scale * scale ) );
-  float displacement = - 10. * noise + b;
-
+  float b = noiseScale * pnoise( 0.5 * position + vec3( 2.0 * time ), vec3( noiseScale ) );
+  float displacement = - noise + b;
+  // displacement = cubicBezier(vUv.x, noise, b, vdisplacement, )
+  // float displacement = min(0., sin(- noiseScale * .01 * noise + b));
+//  float displacement = smoothstep(-.00001, .0001, sin(- noiseScale * .01 * noise + b)) * random(vec3(1.), time); 
+  
+  
   vec3 newPosition = position + normal * displacement;
+  // newPosition.x = parabola(newPosition.x, newPosition.y) - 2.;
+  // vec3 bezierPosition = newPosition + cubicBezier(vUv.x, position, position, newPosition.x, newPosition.y)
   gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 }
