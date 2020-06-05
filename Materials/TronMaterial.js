@@ -34,7 +34,7 @@ export function TronMaterial({ materialRef, side, color }) {
 	return <shaderMaterial
 		ref={materialRef}
 		uniforms={uniforms.current}
-		side={side}
+		side={side ? side : THREE.FrontSide}
 		vertexShader={simpleVertex}
 		fragmentShader={tronFragmentShader}
 	/>;

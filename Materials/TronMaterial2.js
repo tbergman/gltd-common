@@ -7,32 +7,28 @@ import { useFrame, useThree } from 'react-three-fiber';
 import * as THREE from 'three';
 import { hexToRgb } from '../Utils/colors';
 
-export default function TronMaterial2({ materialRef, bpm, side, colorOffset, ...props }) {
+export default function TronMaterial2({ materialRef, side, colorOffset, ...props }) {
 	colorOffset = colorOffset ? colorOffset : new THREE.Vector3(0., .9, .6);
 	materialRef = materialRef ? materialRef : useRef().current;
 	const { clock, size } = useThree();
-	const uniforms = useMemo(() => {
-		return {
-			colorOffset: new THREE.Uniform(colorOffset),
-			uTime: { value: 0 },
-			uResolution: { value: new THREE.Vector2(size.width, size.length) },
-			uBPM: { value: props.bpm ? props.pbm : 120 },
-		}
-	});
+	const uniforms = useRef();
+	useEffect(() => {
+		uniforms.current = {
+				colorOffset: new THREE.Uniform(colorOffset),
+				uTime: { value: 0 },
+			}
+	}, [])
+
 
 	useFrame(() => {
-		if (!uniforms.uTime) return;
-		uniforms.uTime.value = clock.oldTime;
+		if (!uniforms.current.uTime) return;
+		uniforms.current.uTime.value = clock.oldTime;
 	});
-
-	useEffect(() => {
-		if (uniforms.uBPM) uniforms.uBPM.value = bpm;
-	}, [bpm])
 
 	return <shaderMaterial
 		ref={materialRef}
-		uniforms={uniforms}
-		side={side}
+		uniforms={uniforms.current}
+		side={side ? side : THREE.FrontSide}
 		vertexShader={simpleVertex}
 		fragmentShader={tronFragmentShader}
 	/>;

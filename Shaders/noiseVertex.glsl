@@ -183,7 +183,7 @@ float pnoise(vec3 P, vec3 rep)
 
 
 varying vec2 vUv;
-varying float noise;
+// varying float noise;
 uniform float time;
 uniform float noiseScale;
 
@@ -216,20 +216,10 @@ void main() {
   vUv = uv;
 
   // add time to the noise parameters so it's animated
-  // noise = -.1 * turbulence( .5 * normal + time );
-  // noise = -noiseScale * turbulence( .5 * normal + time );
-  noise = sin(noiseScale *  -noiseScale * .5 * turbulence( .5 * normal + time ));
-  // float b = 1. * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
+  float noise = sin(noiseScale *  -noiseScale * .5 * turbulence( .5 * normal + time ));
   float b = noiseScale * pnoise( 0.5 * position + vec3( 2.0 * time ), vec3( noiseScale ) );
   float displacement = - noise + b;
-  // displacement = cubicBezier(vUv.x, noise, b, vdisplacement, )
-  // float displacement = min(0., sin(- noiseScale * .01 * noise + b));
-//  float displacement = smoothstep(-.00001, .0001, sin(- noiseScale * .01 * noise + b)) * random(vec3(1.), time); 
-  
-  
   vec3 newPosition = position + normal * displacement;
-  // newPosition.x = parabola(newPosition.x, newPosition.y) - 2.;
-  // vec3 bezierPosition = newPosition + cubicBezier(vUv.x, position, position, newPosition.x, newPosition.y)
   gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 }
