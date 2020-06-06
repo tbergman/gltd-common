@@ -5,7 +5,7 @@ import env from "../assets/textures/env-maps/tree.jpg";
 export default function NaiveGlass({ materialRef, ...props }) {
     const envMap = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
-        const envMap = textureLoader.load(env);
+        const envMap = props.envMap ? props.envMap : textureLoader.load(env);
         envMap.mapping = THREE.EquirectangularRefractionMapping;
         envMap.encoding = THREE.sRGBEncoding;
         return envMap;

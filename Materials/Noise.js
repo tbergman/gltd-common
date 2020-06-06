@@ -47,7 +47,7 @@ export default function Noise({ materialRef, ...props }) {
 			if (uniforms.current.noiseScale.value < uniforms.current.noiseScale) {
 				uniforms.current.noiseScale.value += delta;
 			}
-		} else if (uniforms.noiseScale.value > minNoiseScale) {
+		} else if (uniforms.current.noiseScale.value > minNoiseScale) {
 			uniforms.current.noiseScale.value -= delta;
 		}
 	})
