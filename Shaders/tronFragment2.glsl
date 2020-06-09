@@ -5,9 +5,14 @@ uniform vec3 colorOffset;
 uniform float uTime;
 
 void main() {
-  float wavyLines = sin(vUv.x * uTime / .5);
-  vec3 wavyColor = vec3(sin(wavyLines * .25) - colorOffset.r, wavyLines - colorOffset.g, cos(wavyLines) - colorOffset.b);
-  gl_FragColor = vec4(wavyColor, 1.0);
+  vec2 wavyLines = vec2(sin(vUv.x * uTime ), sin(vUv.y * uTime));
+  
+  float x = sin(vUv.x / vUv.y) + colorOffset.g;
+  float y = wavyLines.y + colorOffset.g;
+  float z = colorOffset.b;
+  
+  
+  gl_FragColor = vec4(x, y, z, 1.0);
 }
 
 

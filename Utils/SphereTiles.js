@@ -41,7 +41,6 @@ export function SphereTiles({ rotation, sphereGeometry, tileComponent, tileEleme
         // worldPos.y * Math.cos(rotation.x) - worldPos.x * Math.sin(rotation.x),
         // worldPos.z,
         // )
-        // console.log(rotation, sphereRelativePos);
         // return sphereRelativePos;
         return worldPos;
     }
