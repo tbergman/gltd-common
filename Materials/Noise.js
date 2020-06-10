@@ -41,15 +41,19 @@ export default function Noise({ materialRef, ...props }) {
 	})
 
 	useFrame(() => {
-		const delta = .01;
-		const minNoiseScale = .0001;
-		if (Math.abs(mouse.x) < .75 && Math.abs(mouse.y) < .75) {
-			if (uniforms.current.noiseScale.value < uniforms.current.noiseScale) {
-				uniforms.current.noiseScale.value += delta;
-			}
-		} else if (uniforms.current.noiseScale.value > minNoiseScale) {
-			uniforms.current.noiseScale.value -= delta;
-		}
+		// TODO this was stupid - think of something else
+		// const delta = .01;
+		// const minNoiseScale = .0001;
+		// const maxNoiseScale = .0005;
+		// if (Math.abs(mouse.x) < .75 && Math.abs(mouse.y) < .75) {
+		// if (uniforms.current.noiseScale.value < maxNoiseScale) {
+				// console.log("INCREMENTING THE NOSISCALE, NOW IT'S", uniforms.current.noiseScale)
+				// uniforms.current.noiseScale.value += delta;
+			// }
+		// } else if (uniforms.current.noiseScale.value > minNoiseScale) {
+			// uniforms.current.noiseScale.value -= delta;
+			// console.log("DIMINUATING THE NOISE SCALE, NOW IT's", uniforms.current.noiseScale)
+		// }
 	})
 
 	return <shaderMaterial
