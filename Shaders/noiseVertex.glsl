@@ -219,6 +219,9 @@ void main() {
   float noise = sin(noiseScale *  -noiseScale * .5 * turbulence( .5 * normal + time ));
   float b = noiseScale * pnoise( 0.5 * position + vec3( 2.0 * time ), vec3( noiseScale ) );
   float displacement = - noise + b;
+  if (abs(displacement) < .025){
+    displacement = 0.;
+  }
   vec3 newPosition = position + normal * displacement;
   gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
