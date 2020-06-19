@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function OverlayPurchaseLink({ href, color, text }) {
+    text = text ? text : "BUY ME"
     return (
         <div className="overlay-content-item">
             <div className="overlay-content-icon">
