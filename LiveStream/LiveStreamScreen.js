@@ -4,6 +4,7 @@ import Hls from 'hls.js';
 
 export function createLiveStreamTexture({src, play}) {
   const video = document.createElement("video");
+  video.crossOrigin = "anonymous"; // CORS
   document.body.appendChild(video);
   // Add support for HLS stream 
   if (Hls.isSupported()) {
