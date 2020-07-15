@@ -1,36 +1,58 @@
-import React from 'react';
-import {useFrame} from 'react-three-fiber';
+import React, {useMemo, useRef, useEffect} from 'react';
+import * as THREE from 'three';
 
-export function ObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
-    return <>
-        {props.children}
-    </>
+export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
+    const [normal, binormal] = useMemo(() => {
+        return [
+            new THREE.Vector3(),
+            new THREE.Vector3(),
+        ]
+    });
+    // driving units
+    const offset = useRef();
+    const delta = useRef();
+    const speed = useRef();
+    function getCurTrajectory({
+        tubeGeometry,
+        offset,
+        delta,
+        t,
+    }) {
+        const pos = tubeGeometry.parameters.path.getPointAt(t);
+        offset.current += delta.current;
+        // interpolation
+        const segments = tubeGeometry.tangents.length;
+        const pickt = t * segments;
+        const pick = Math.floor(pickt);
+        const pickNext = (pick + 1) % segments;
+        binormal.subVectors(tubeGeometry.binormals[pickNext], tubeGeometry.binormals[pick]);
+        binormal.multiplyScalar(pickt - pick).add(tubeGeometry.binormals[pick]);//.add(up);
+        const dir = tubeGeometry.parameters.path.getTangentAt(t);
+        normal.copy(binormal); // most examples have .cross(dir) here but this will rotate the normal to the 'side' of the orientation we want to achieve 
+        // We move on a offset on its binormal
+        pos.add(normal.clone());
+        return { pos, dir };
+    }
+    useEffect(() => {
+        if (!speed.current) speed.current = 20;
+        if (!delta.current) delta.current = .005;
+        if (!offset.current) offset.current = 0;
+    })
+
+    return {
+        offset,
+        delta,
+        speed,
+        normal,
+        binormal,
+        getCurTrajectory,
+
+    }
 }
 
 
-export function getCurTrajectory({
-    tubeGeometry,
-    offset,
-    delta,
-    binormal,
-    normal,
-    t,
-}) {
-    const pos = tubeGeometry.parameters.path.getPointAt(t);
-    offset.current += delta.current;
-    // interpolation
-    const segments = tubeGeometry.tangents.length;
-    const pickt = t * segments;
-    const pick = Math.floor(pickt);
-    const pickNext = (pick + 1) % segments;
-    binormal.subVectors(tubeGeometry.binormals[pickNext], tubeGeometry.binormals[pick]);
-    binormal.multiplyScalar(pickt - pick).add(tubeGeometry.binormals[pick]);//.add(up);
-    const dir = tubeGeometry.parameters.path.getTangentAt(t);
-    normal.copy(binormal); // most examples have .cross(dir) here but this will rotate the normal to the 'side' of the orientation we want to achieve 
-    // We move on a offset on its binormal
-    pos.add(normal.clone());
-    return { pos, dir };
-}
+
+
 
 export const updateCurTrajectory = ({t, pos, dir, normal, object, tubeGeometry}) => {
     object.position.copy(pos);
