@@ -1,7 +1,7 @@
 import React, {useMemo, useRef, useEffect} from 'react';
 import * as THREE from 'three';
 import {useFrame} from 'react-three-fiber';
-
+import { useKeyPress } from '../Utils/hooks';
 export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
     const [normal, binormal] = useMemo(() => {
         return [
@@ -13,7 +13,13 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
     const offset = useRef();
     const delta = useRef();
     const speed = useRef();
-    function getCurTrajectory(t) {
+    const accelerationPressed = useKeyPress('ArrowUp');
+    const slowDownPressed = useKeyPress('ArrowDown');
+    const arrowLeftPressed = useKeyPress('ArrowLeft');
+    const arrowRightPressed = useKeyPress('ArrowRight');
+    
+    function getCurTrajectory() {
+        const t = (offset.current % speed.current) / speed.current;
         const pos = tubeGeometry.parameters.path.getPointAt(t);
         offset.current += delta.current;
         // interpolation
@@ -27,7 +33,7 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
         normal.copy(binormal); // most examples have .cross(dir) here but this will rotate the normal to the 'side' of the orientation we want to achieve 
         // We move on a offset on its binormal
         pos.add(normal.clone());
-        return { pos, dir };
+        return { pos, dir, t };
     }
     function updateCurTrajectory ({t, pos, dir}) {
         object.position.copy(pos);
@@ -39,21 +45,40 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
         object.rotation.setFromRotationMatrix(object.matrix);
         // car.rotation.z += Math.PI / 12; // TODO added code - can it be baked into matrix rotation?
     }
-    
+    const updateSpeed = () => {
+        if (accelerationPressed) {
+            if (delta.current < .05 && speed.current > 1) {
+                speed.current -= .1;
+            }
+        }
+        if (slowDownPressed) {
+            if (delta.current >= 0) {
+                speed.current += .1;
+                delta.current -= .001;
+            }
+            if (delta.current < 0) {
+                delta.current = 0;
+            }
+
+        }
+    }
+
     useEffect(() => {
         if (!speed.current) speed.current = 20;
         if (!delta.current) delta.current = .005;
         if (!offset.current) offset.current = 0;
     })
-    // useFrame(() => {
-    //     updateSpeed();
-    // })
+    useFrame(() => {
+        updateSpeed();
+    })
     return {
         offset,
         delta,
         speed,
         normal,
         binormal,
+        arrowLeftPressed,
+        arrowRightPressed,
         getCurTrajectory,
         updateCurTrajectory,
     }
