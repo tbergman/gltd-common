@@ -33,7 +33,7 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
         normal.copy(binormal); // most examples have .cross(dir) here but this will rotate the normal to the 'side' of the orientation we want to achieve 
         // We move on a offset on its binormal
         pos.add(normal.clone());
-        return { pos, dir, t };
+        return [pos, dir, t];
     }
     function updateCurTrajectory ({t, pos, dir}) {
         object.position.copy(pos);
@@ -68,8 +68,13 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
         if (!delta.current) delta.current = .005;
         if (!offset.current) offset.current = 0;
     })
+    // TODO http://jsfiddle.net/krw8nwLn/66/
     useFrame(() => {
         updateSpeed();
+        const [pos, dir, t] = getCurTrajectory();
+        if (!arrowLeftPressed && !arrowRightPressed){
+            updateCurTrajectory({t, pos, dir})
+        }
     })
     return {
         offset,
