@@ -64,9 +64,9 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
     }
 
     useEffect(() => {
-        if (!speed.current) speed.current = 20;
-        if (!delta.current) delta.current = .005;
-        if (!offset.current) offset.current = 0;
+        if (!speed.current) speed.current = props.speed ? props.speed : 20;
+        if (!delta.current) delta.current = props.delta ? props.speed : .005;
+        if (!offset.current) offset.current = props.offset ? props.offset : 0;
     })
     // TODO http://jsfiddle.net/krw8nwLn/66/
     useFrame(() => {
