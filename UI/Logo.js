@@ -7,11 +7,9 @@ function onClick(e) {
 }
 
 export default function Logo({ fillColor }) {
-
   return (
     <div className="logo-wrapper"
       onClick={onClick}>
-      <div id="logo-light" />
       <svg width="75" height="75" viewBox="-1.2 -1.2 2.2 2.2">
         <g fill="none" stroke={fillColor} strokeWidth="0.01">
           <circle r="1" />
