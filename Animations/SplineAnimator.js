@@ -1,8 +1,10 @@
-import React, {useMemo, useRef, useEffect} from 'react';
+import React, { Children, cloneElement, useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
-import {useFrame} from 'react-three-fiber';
+import { useFrame } from 'react-three-fiber';
 import { useKeyPress } from '../Utils/hooks';
+
 export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
+    console.log('object', object)
     const [normal, binormal] = useMemo(() => {
         return [
             new THREE.Vector3(),
@@ -17,7 +19,7 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
     const slowDownPressed = useKeyPress('ArrowDown');
     const arrowLeftPressed = useKeyPress('ArrowLeft');
     const arrowRightPressed = useKeyPress('ArrowRight');
-    
+
     function getCurTrajectory() {
         const t = (offset.current % speed.current) / speed.current;
         const pos = tubeGeometry.parameters.path.getPointAt(t);
@@ -35,7 +37,9 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
         pos.add(normal.clone());
         return [pos, dir, t];
     }
-    function updateCurTrajectory ({t, pos, dir}) {
+    function updateCurTrajectory({ t, pos, dir }) {
+        console.warn("object undefined")
+        if (!object) return;
         object.position.copy(pos);
         // Using arclength for stablization in look ahead.
         const lookAt = tubeGeometry.parameters.path.getPointAt((t + 30 / tubeGeometry.parameters.path.getLength()) % 1);
@@ -70,10 +74,10 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
     })
     // TODO http://jsfiddle.net/krw8nwLn/66/
     useFrame(() => {
-        updateSpeed();
+        // updateSpeed();
         const [pos, dir, t] = getCurTrajectory();
-        if (!arrowLeftPressed && !arrowRightPressed){
-            updateCurTrajectory({t, pos, dir})
+        if (!arrowLeftPressed && !arrowRightPressed) {
+            updateCurTrajectory({ t, pos, dir })
         }
     })
     return {
@@ -88,8 +92,3 @@ export function useObjectAlongTubeGeometry({ object, tubeGeometry, ...props }) {
         updateCurTrajectory,
     }
 }
-
-
-
-
-
