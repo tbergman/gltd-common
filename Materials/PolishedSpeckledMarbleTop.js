@@ -20,11 +20,16 @@ export default function PolishedSpeckledMarbleTop({ materialRef, ...props }) {
     });
     return <meshStandardMaterial
         ref={materialRef}
+        lights
+        receiveShadow
+        castShadow
         map={albedoMap}
-        color={props.color || "white"}
         metallicMap={metallicMap}
         normalMap={normalMap}
         roughnessMap={roughnessMap}
         skinning={props.skinning || false}
-        envMap={envMap} />;
+        envMap={envMap}
+        side={props.side ? props.sid : THREE.FrontSide}
+        {...props}
+    />;
 }
