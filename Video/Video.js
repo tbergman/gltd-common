@@ -1,6 +1,5 @@
 import React, { useMemo, useRef, useResource } from "react";
 import * as THREE from "three";
-import Hls from 'hls.js';
 
 export function createVideoTexture({src, play}) {
   const video = document.createElement("video");
