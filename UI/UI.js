@@ -61,10 +61,10 @@ export default function UI({
     // }, [equalPressed]);
 
     // console.log(minusPressed);
-    console.log('Should we show the UI?');
-    console.log(showUI);
-    return (showUI && 
-        <>
+    // console.log('Should we show the UI?');
+    // console.log(showUI);
+    // return (showUI && 
+    return (<>
             {logo && <Logo color={content.colors.logo} />}
             {navigation && <Navigation color={content.colors.navigation} lastIdx={content.lastIdx || -1} />}
             {overlay && <Overlay
@@ -103,5 +103,5 @@ export default function UI({
                 />}
             </div>
         </>
-    )
+    );
 }
