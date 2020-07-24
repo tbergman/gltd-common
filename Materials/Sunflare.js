@@ -5,7 +5,6 @@ import tronFragmentShader from '!raw-loader!glslify-loader!../Shaders/sunflareFr
 import React, { useEffect, useRef } from 'react';
 import { useFrame, useThree } from 'react-three-fiber';
 import * as THREE from 'three';
-import { hexToRgb } from '../Utils/colors';
 
 export function Sunflare({ materialRef, side, ...props }) {
 
@@ -13,24 +12,15 @@ export function Sunflare({ materialRef, side, ...props }) {
     const { clock, size } = useThree();
     const uniforms = useRef();
     useEffect(() => {
-    // 	const baseColor = hexToRgb(color.toString(16));
-    	uniforms.current = {
-    		uTime: { value: 0 },
-    // 		uResolution: { value: new THREE.Vector2(size.width, size.length) },
-    // 		uBPM: { value: 120 },
-    // 		uBaseColor: { value: new THREE.Vector3(baseColor.r, baseColor.g, baseColor.g) },
-    	}
+        uniforms.current = {
+            uTime: { value: 0 },
+        }
     }, []);
 
     useFrame(() => {
-    	if (!uniforms.current.uTime) return; // avoid re-initialization async issues (e.g. if tiling)
+        if (!uniforms.current.uTime) return; // avoid re-initialization async issues (e.g. if tiling)
         uniforms.current.uTime.value = clock.oldTime;
-        console.log("TIME", uniforms.current.uTime)
     });
-
-    // useEffect(() => {
-    // 	if (uniforms.current.uBPM) uniforms.current.uBPM.value = bpm;
-    // }, [bpm])
 
     return <shaderMaterial
         ref={materialRef}
