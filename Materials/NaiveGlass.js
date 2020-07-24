@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import env from "../assets/textures/env-maps/HDRI_sky_01.png";
+import env from "../assets/textures/env-maps/optical-illusion.png"
 
 export default function NaiveGlass({ materialRef, ...props }) {
     const envMap = useMemo(() => {
