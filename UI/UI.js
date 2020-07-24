@@ -6,6 +6,7 @@ import Overlay from './Overlay/Overlay';
 import Player from './Player/Player';
 import './UI.css';
 import usePlayer from './Player/hooks/usePlayer';
+import { useKeyPress } from '../Utils/hooks';
 
 export default function UI({
     content,
@@ -19,6 +20,7 @@ export default function UI({
     // around overlay being closed the first time.
     onOverlayHasBeenClosed = () => { },
 }) {
+    const [showUI, toggleUI] = useState(true);
     const [logo, _] = useState(loadWithLogo);
     const [navigation, __] = useState(loadWithNavigation);
     const [player, togglePlayer] = useState(loadWithPlayer);
@@ -42,9 +44,27 @@ export default function UI({
         toggleInfoIcon(loadWithInfoIcon || overlayHasBeenClosed);
         togglePlayer(loadWithPlayer || overlayHasBeenClosed && hasTracks);
     }, [overlayHasBeenClosed])
+    
+    const minusPressed = useKeyPress('-');
+    useEffect(()=> {
+      if (!overlayHasBeenClosed) return;
+      if (minusPressed && showUI) {
+        toggleUI(false)
+      } else if (minusPressed && !showUI) {
+        toggleUI(true)
+      }
+    }, [minusPressed, showUI])
 
-    return (
-        <>
+    const equalPressed = useKeyPress('=');
+    // useEffect(()=> {
+
+    // }, [equalPressed]);
+
+    // console.log(minusPressed);
+    // console.log('Should we show the UI?');
+    // console.log(showUI);
+    // return (showUI && 
+    return (<>
             {logo && <Logo color={content.colors.logo} />}
             {navigation && <Navigation color={content.colors.navigation} lastIdx={content.lastIdx || -1} />}
             {overlay && <Overlay
@@ -83,5 +103,5 @@ export default function UI({
                 />}
             </div>
         </>
-    )
+    );
 }
