@@ -6,7 +6,7 @@ import metallic from "../assets/textures/marble-speckled-bl/marble-speckled-meta
 import normal from "../assets/textures/marble-speckled-bl/marble-speckled-normal.png";
 import roughness from "../assets/textures/marble-speckled-bl/marble-speckled-roughness.png";
 
-export default function PolishedSpeckledMarbleTop({ materialRef, ...props }) {
+export default function PolishedSpeckledMarbleTop({ materialRef, useEnvMap=true, ...props }) {
     // source https://freepbr.com/materials/polished-speckled-marble-top-pbr-material/
     const [albedoMap, metallicMap, normalMap, roughnessMap, envMap] = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
@@ -18,6 +18,7 @@ export default function PolishedSpeckledMarbleTop({ materialRef, ...props }) {
         const textureMaps = [albedoMap, metallicMap, normalMap, roughnessMap, envMap];
         return tileTextureMaps(textureMaps, props);
     });
+    console.log("USE ENVMAP!", props.useEnvMap)
     return <meshStandardMaterial
         ref={materialRef}
         lights
@@ -26,9 +27,11 @@ export default function PolishedSpeckledMarbleTop({ materialRef, ...props }) {
         map={albedoMap}
         metallicMap={metallicMap}
         normalMap={normalMap}
+        metalness={1}
         roughnessMap={roughnessMap}
+        roughness={1}
         skinning={props.skinning || false}
-        envMap={envMap}
+        envMap={useEnvMap ? envMap : undefined}
         side={props.side ? props.sid : THREE.FrontSide}
         {...props}
     />;
