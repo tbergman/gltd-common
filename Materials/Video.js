@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { createVideoTexture } from '../Video/Video'a
+import { createVideoTexture } from '../Video/Video';
 
 export default function Video({ materialRef, src, play, ...props }) {
 
