@@ -5,7 +5,6 @@ import Navigation from './Navigation';
 import Overlay from './Overlay/Overlay';
 import Player from './Player/Player';
 import './UI.css';
-import './Header.css';
 import usePlayer from './Player/hooks/usePlayer';
 import { useKeyPress } from '../Utils/hooks';
 
