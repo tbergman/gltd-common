@@ -5,10 +5,9 @@ auto-generated with modifications by: https://github.com/react-spring/gltfjsx
 import { useEffect, useRef } from 'react'
 
 
-export function useAnimationFadeIn({ actions, actionName }) {
+export function useAnimationFadeIn({ actions, actionName, fadeInTime = 2 }) {
     const nextAction = useRef()
     const curAction = useRef()
-    const fadeInTime = 2
 
     useEffect(() => {
         if (!actions) return
