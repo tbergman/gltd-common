@@ -5,6 +5,7 @@ import Navigation from './Navigation';
 import Overlay from './Overlay/Overlay';
 import Player from './Player/Player';
 import './UI.css';
+import './Header.css';
 import usePlayer from './Player/hooks/usePlayer';
 import { useKeyPress } from '../Utils/hooks';
 
@@ -53,19 +54,11 @@ export default function UI({
       } else if (minusPressed && !showUI) {
         toggleUI(true)
       }
-    }, [minusPressed, showUI])
+    }, [minusPressed])
 
-    const equalPressed = useKeyPress('=');
-    // useEffect(()=> {
-
-    // }, [equalPressed]);
-
-    // console.log(minusPressed);
-    // console.log('Should we show the UI?');
-    // console.log(showUI);
-    // return (showUI && 
-    return (<>
-            {logo && <Logo color={content.colors.logo} />}
+    return (showUI &&
+          <>
+            {logo && <Logo fillColor={content.colors.logo}/>}
             {navigation && <Navigation color={content.colors.navigation} lastIdx={content.lastIdx || -1} />}
             {overlay && <Overlay
                 hasBeenClosed={overlayHasBeenClosed}
