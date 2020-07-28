@@ -1,4 +1,5 @@
 import React from 'react';
+import './Logo.css';
 
 function onClick(e) {
   e.preventDefault();
