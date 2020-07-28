@@ -7,18 +7,19 @@ import { useEffect, useRef } from 'react'
 
 export function useAnimationFadeIn({ actions, actionName, fadeInTime = 2 }) {
     const nextAction = useRef()
-    const curAction = useRef()
+    const action = useRef()
 
     useEffect(() => {
         if (!actions) return
-        if (!curAction.current) {
-            curAction.current = actions[actionName]
+        if (!action.current) {
+            action.current = actions[actionName]
+            action.current.play()
         } else {
             nextAction.current = actions[actionName]
             nextAction.current.enabled = true;
             nextAction.current.play()
-            curAction.current.crossFadeTo(nextAction.current, fadeInTime);
-            curAction.current = nextAction.current
+            action.current.crossFadeTo(nextAction.current, fadeInTime);
+            action.current = nextAction.current
         }
     }, [actionName, actions])
 
