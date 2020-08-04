@@ -13,6 +13,7 @@ export function useTrackStepSequence({ tracks, firstTrack }) {
         if (!currentTrackName) return;
         setNumSteps(tracks[currentTrackName].steps.length);
         const prevStepIdx = stepIdx
+        // change to idx 0 when currentTrackName changes
         setStepIdx(0)
         // if someone switches tracks before the step gets to step 1, need to
         // set step manually here
