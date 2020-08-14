@@ -5,6 +5,7 @@ import albedo from "../assets/textures/marble-speckled-bl/marble-speckled-albedo
 import metallic from "../assets/textures/marble-speckled-bl/marble-speckled-metalness.png";
 import normal from "../assets/textures/marble-speckled-bl/marble-speckled-normal.png";
 import roughness from "../assets/textures/marble-speckled-bl/marble-speckled-roughness.png";
+import env from "../assets/textures/env-maps/free_star_sky_hdri_spherical_map_by_kirriaa_dbw8p0w.jpg"
 
 export default function PolishedSpeckledMarbleTop({ materialRef, useEnvMap=true, ...props }) {
     // source https://freepbr.com/materials/polished-speckled-marble-top-pbr-material/
@@ -14,11 +15,11 @@ export default function PolishedSpeckledMarbleTop({ materialRef, useEnvMap=true,
         const metallicMap = textureLoader.load(metallic);
         const normalMap = textureLoader.load(normal);
         const roughnessMap = textureLoader.load(roughness);
-        const envMap = props.envMapURL ? textureLoader.load(envMapUrl) : cloudEnvMap();
+        const envMap = textureLoader.load(env);
+        // const envMap = props.envMapURL ? textureLoader.load(envMapUrl) : cloudEnvMap();
         const textureMaps = [albedoMap, metallicMap, normalMap, roughnessMap, envMap];
         return tileTextureMaps(textureMaps, props);
     });
-    console.log("USE ENVMAP!", props.useEnvMap)
     return <meshStandardMaterial
         ref={materialRef}
         lights
