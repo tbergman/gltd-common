@@ -49,6 +49,7 @@ const useAudioPlayer = () => {
     playPreviousTrack,
     playNextTrack,
     audioStream: state.audioStream,
+    // TODO (jeremy) this doesn't work
     currentTime: state.audioPlayer.currentTime,
     audioPlayer: state.audioPlayer,
     bpm: state.currentTrackIndex !== null && state.tracks[state.currentTrackIndex].bpm,

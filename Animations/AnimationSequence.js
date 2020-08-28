@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import React, { useRef, useState, useEffect } from 'react'
 import { useFrame } from 'react-three-fiber'
 
-export function useAnimationSequence({ animationName }) {
+export function useAnimationSequence({ animationName, animationsLoaded }) {
     const actions = useRef()
     const [prevAction, setPrevAction] = useState()
     const [curAction, setCurAction] = useState()
@@ -17,6 +17,13 @@ export function useAnimationSequence({ animationName }) {
         setPrevAction(curAction)
         setCurAction(actions.current[animationName])
     }, [animationName])
+
+    // allow for slow-loading files to alert the component when it's ready and
+    // loaded
+    useEffect(() => {
+        if (!actions.current) return
+        if (!curAction) setCurAction(actions.current[animationName]) 
+    }, [animationsLoaded])
 
     useEffect(() => {
         if (!curAction) return
