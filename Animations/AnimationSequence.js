@@ -3,14 +3,19 @@ import * as THREE from 'three'
 import React, { useRef, useState, useEffect } from 'react'
 import { useFrame } from 'react-three-fiber'
 
-export function useAnimationSequence({ animationName, animationsLoaded }) {
+export function useAnimationSequence({ animationName, animationTimeScale }) {
     const actions = useRef()
     const [prevAction, setPrevAction] = useState()
     const [curAction, setCurAction] = useState()
-
+    const [animationsHaveLoaded, setAnimationsHaveLoaded] = useState(false)
     const [mixer] = useState(() => new THREE.AnimationMixer())
 
     useFrame((state, delta) => mixer.update(delta))
+
+    useEffect(() => {
+        if (!animationTimeScale) return
+        mixer.timeScale = animationTimeScale
+    }, [animationTimeScale])
 
     useEffect(() => {
         if (!actions.current || !animationName) return
@@ -22,13 +27,13 @@ export function useAnimationSequence({ animationName, animationsLoaded }) {
     // loaded
     useEffect(() => {
         if (!actions.current) return
-        if (!curAction) setCurAction(actions.current[animationName]) 
-    }, [animationsLoaded])
+        if (!curAction) setCurAction(actions.current[animationName])
+    }, [animationsHaveLoaded])
 
     useEffect(() => {
         if (!curAction) return
         if (prevAction) prevAction.stop()
         curAction.play()
     }, [curAction])
-    return { actions, mixer }
+    return { actions, mixer, setAnimationsHaveLoaded }
 }

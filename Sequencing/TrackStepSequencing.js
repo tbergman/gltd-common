@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useFrame } from 'react-three-fiber';
 import useAudioPlayer from '../UI/Player/hooks/useAudioPlayer';
 
@@ -7,6 +7,7 @@ export function useTrackStepSequence({ tracks, firstTrack }) {
     const [step, setStep] = useState(tracks[firstTrack].steps[0]);
     const [stepIdx, setStepIdx] = useState(0);
     const [numSteps, setNumSteps] = useState(tracks[firstTrack].steps.length)
+    const [prevStep, setPrevStep] = useState()
 
     // reset step info per track
     useEffect(() => {
@@ -25,7 +26,15 @@ export function useTrackStepSequence({ tracks, firstTrack }) {
     // set current step
     useEffect(() => {
         if (!currentTrackName) return;
-        setStep(tracks[currentTrackName].steps[stepIdx]);
+        if (stepIdx > 0) {
+            setPrevStep(step)
+        }
+        setStep((prevState) => {
+            return ({
+                ...prevState,
+                ...tracks[currentTrackName].steps[stepIdx],
+            })
+        })
     }, [stepIdx])
 
     // manage step advancement with nextStepidx
