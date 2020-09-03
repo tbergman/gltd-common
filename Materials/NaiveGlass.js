@@ -17,6 +17,7 @@ export default function NaiveGlass({ materialRef, ...props }) {
         color={props.color ? props.color : "white"}
         shininess={props.shininess ? props.shininess : 30}
         opacity={props.opacity ? props.opacity : .5}
+        map={envMap}
         envMap={envMap}
         transparent={true}
         combine={THREE.MixOperation}

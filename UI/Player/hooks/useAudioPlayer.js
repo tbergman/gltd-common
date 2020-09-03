@@ -1,8 +1,9 @@
 import { useContext, useEffect } from 'react';
 import { AudioPlayerContext } from "../AudioPlayerContext";
 import AudioStreamer from '../../../Audio/AudioStreamer';
+import { isSafari } from '../../../Utils/BrowserDetection';
 
-// TODO autoAdvance track like LegacyPlayer
+// TODO (jeremy) autoAdvance track like LegacyPlayer
 const useAudioPlayer = () => {
 
   const [state, setState] = useContext(AudioPlayerContext);
@@ -12,9 +13,11 @@ const useAudioPlayer = () => {
       togglePlay();
     } else {
       state.audioPlayer.pause();
-      state.audioPlayer =   new Audio(state.tracks[index].file);
+      state.audioPlayer = new Audio(state.tracks[index].file);
       state.audioPlayer.crossOrigin = "anonymous";
-      state.audioStream = new AudioStreamer(state.audioPlayer);
+      if (!isSafari) {
+        state.audioStream = new AudioStreamer(state.audioPlayer);
+      }
       state.audioPlayer.play();
       setState(state => ({ ...state, currentTrackIndex: index, isPlaying: true }));
     }
@@ -48,7 +51,7 @@ const useAudioPlayer = () => {
     isPlaying: state.isPlaying,
     playPreviousTrack,
     playNextTrack,
-    audioStream: state.audioStream,
+    audioStream: state.audioStream ? state.audioStream : null,
     // TODO (jeremy) this doesn't work
     currentTime: state.audioPlayer.currentTime,
     audioPlayer: state.audioPlayer,

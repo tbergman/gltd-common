@@ -51,5 +51,6 @@ export function useTrackStepSequence({ tracks, firstTrack }) {
     return {
         step,
         stepIdx,
+        prevStep,
     }
 }
