@@ -23,23 +23,6 @@
     z-index: 1000;
 }
 
-#logo-light {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 0px;
-    border-radius: 100%;
-    background-color: white;
-    opacity: 0.2;
-    -webkit-filter: blur(20px);
-    z-index: 1001;
-}
-
-#logo-light:hover {
-    background-color: black;
-    opacity: 0.2;
-}
-
 @keyframes rot {
     from {
         transform: rotate(0deg)

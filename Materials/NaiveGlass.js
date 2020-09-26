@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import env from "../assets/textures/env-maps/tree.jpg";
+import env from "../assets/textures/env-maps/optical-illusion.png"
 
 export default function NaiveGlass({ materialRef, ...props }) {
     const envMap = useMemo(() => {
@@ -12,10 +12,12 @@ export default function NaiveGlass({ materialRef, ...props }) {
     })
     return <meshPhongMaterial
         ref={materialRef}
+        {...props}
         side={THREE.DoubleSide}
-        color={props.color || "white"}
-        shininess={props.shininess || 30}
-        opacity={props.opacity || .5}
+        color={props.color ? props.color : "white"}
+        shininess={props.shininess ? props.shininess : 30}
+        opacity={props.opacity ? props.opacity : .5}
+        map={envMap}
         envMap={envMap}
         transparent={true}
         combine={THREE.MixOperation}
